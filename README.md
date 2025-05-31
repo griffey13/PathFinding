@@ -12,9 +12,17 @@ Note that this project only provides path-finding algorithms for 2D space.
 
 Input to the Algorithm
 ------------
-*  `A binary map of N x N fields, where each field represents a position on the battlefield`
-*  `A user defined or randomly positioned single battle unit. A battle unit always occupies exactly on poisiton on the battlefiled`
-*  `A user defined or randomly chosen target position for the unit` 
+1. **Battlefield Map**
+    -  A binary map of N x N fields, where each field represents a position on the battlefield
+    -  Each position is either:
+          - **Ground Terrain:** Occupiable by a single battle unit.
+          - **Elevated Terrain:** Unreachable by battle units.
+2. **Battle Unit**
+    -  A user defined or randomly positioned single battle unit. Assume that a unit always occupies exactly on poisiton on the battlefiled
+3. **Target Position**
+    -  A user defined or randomly chosen target position for the unit.
+
+**Note:** The algoritm supports the use of JSON format files compatible with [<ins>Risky Tilemap</ins>](https://riskylab.com/tilemap). A sample JSON is available at [<ins>this link</ins>](https://gist.github.com/dgehriger/80817b039498ed60657da048f980233f).
 
 #### Usage example
 ```cpp
