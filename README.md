@@ -108,27 +108,8 @@ Development
 Layout:
     .
     |-- Input          # Input Files
-      -- Sample1.json (1st Sample or test case battlefield)
-      -- Sample2.json (2nd Sample or test case battlefield)
-      -- Sample3.json (3rd Sample or test case battlefield)
-      -- take_home_project.json (4th Sample or test case battlefield)
     |-- Output         # Ouput Files
-      -- Sample1_PathOutput.txt ( Path coordinate text output from Sample1.json)
-      -- Sample1_PathVisual.txt ( Path coordinate visual output from Sample1.json)
-      -- Sample2_PathOutput.txt ( Path coordinate text output from Sample2.json)
-      -- Sample2_PathVisual.txt ( Path coordinate visual output from Sample2.json)
-      -- Sample3_PathOutput.txt ( Path coordinate text output from Sample3.json)
-      -- Sample3_PathVisual.txt ( Path coordinate visual output from Sample3.json)
-      -- PathOutput.txt ( Path coordinate text output from take_home_project.json)
-      -- PathVisual.txt ( Path coordinate visual output from take_home_project.json)
     |-- PathFinder     # Source Code
-      -- AStar.cpp (AStar algorithm source)
-      -- AStar.h (AStar algorithm header)
-      -- PathFinder.cpp ( Main console project source)
-      -- PathFinder.vcxproj (Visual Studio solution file)
-      -- PathFinder.vcxproj.filters (Visual Studio solution file)
-      -- Point.hpp (2D Point Helper source)
-      -- json.hpp  (#rd party library to parse JSON )
     -- PathFinder.sln  # Visual Studio Solution File
     --ReadMe.md        # Informative ReadMe file
 
