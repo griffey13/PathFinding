@@ -1,5 +1,7 @@
 # Path-Finding algorithm
-Implementation of the A* path-finding algorithm written with C++ (C++17) and Microsoft Visual Studio Professional 2019.
+Implementation of the A* path-finding algorithm  for battle units to traverse a battlefield from a starting position to a target position. 
+
+Algorith was written and tested with C++ (C++17) and Microsoft Visual Studio Professional 2019 on Windows 11.
 
 Introduction
 ------------
@@ -7,6 +9,20 @@ Introduction
 The aim of this project is to provide a path-finding library that can be easily implemented.
 
 Note that this project only provides path-finding algorithms for 2D space.
+
+Input to the Algorithm
+------------
+*  `A binary map of N x N fields, where each field represents a position on the battlefield` *
+**  `A user defined or randomly positioned single battle unit. A battle unit always occupies exactly on poisiton on the battlefiled`
+*  `BreadthFirstFinder` *
+*  `DijkstraFinder` *
+*  `IDAStarFinder.js` *
+*  `JumpPointFinder` *
+*  `OrthogonalJumpPointFinder` *
+*  `BiAStarFinder`
+*  `BiBestFirstFinder`
+*  `BiBreadthFirstFinder` *
+*  `BiDijkstraFinder` *
 
 
 #### Usage example
