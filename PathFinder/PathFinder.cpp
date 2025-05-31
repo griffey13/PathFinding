@@ -5,6 +5,7 @@
 
 #include "AStar.h"
 #include "json.hpp"
+#include "Point.hpp"
 
 using namespace std;
 
