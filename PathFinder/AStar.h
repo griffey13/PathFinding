@@ -79,16 +79,21 @@ namespace PathFinder
 		/*
 		* @brief Print path coordinates from starting position (startPos) to 
 		*        target positon (targetPos) to console window as list of 2D coordinates
+		*        and a file if desired
+		* @note This function will always print to the console
 		* @param[in] path Complete path from starting position to target position
+		* @param[in] fileName Name of file to print to. Default is not to print to a file
 		*/
-		void printPathCoords(const std::vector<Point>& path);
+		void printPathCoords(const std::vector<Point>& path, const std::string fileName = "");
 
 		/*
 		* @brief Draw path from starting position (startPos) to target positon (targetPos) to
-		*        console window inside complete grid
+		*        console window inside complete grid and a file if desired
+        * @note This function will always print to the console
 		* @param[in] path Complete path from starting position to target position
+		* @param[in] fileName Name of file to print to. Default is not to print to a file
 		*/
-		void drawPath(const std::vector<Point>& path);
+		void drawPath(const std::vector<Point>& path, const std::string fileName = "");
 
 		/*
 		* @brief Set the tile gird data
