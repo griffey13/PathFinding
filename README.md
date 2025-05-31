@@ -317,6 +317,14 @@ X X * X . . * X . * * X . . . . . X . . . . . . . . . X * X X X
 . X X X X X X . . . . * * * X X X . . . . . . . . . . X . . . *
 . X . . . . . . . . . . . * * * * * * * * * * * * * * * * * * *
 Press any key to continue . . .
+
+## Contact
+
+For any questions, feedback, or suggestions, please contact us at [jacques.hoffler@gmail.com](mailto:jacques.hoffler@gmail.com).
+
+---
+
+**Note:** This repository aims to solve a take home project assignment for a job interview. 
 ```
 
 ## Resources
