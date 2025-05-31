@@ -13,7 +13,7 @@ Note that this project only provides path-finding algorithms for 2D space.
 Input to the Algorithm
 ------------
 *  `A binary map of N x N fields, where each field represents a position on the battlefield` *
-**  `A user defined or randomly positioned single battle unit. A battle unit always occupies exactly on poisiton on the battlefiled`
+*  `A user defined or randomly positioned single battle unit. A battle unit always occupies exactly on poisiton on the battlefiled`
 *  `BreadthFirstFinder` *
 *  `DijkstraFinder` *
 *  `IDAStarFinder.js` *
