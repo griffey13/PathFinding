@@ -3,6 +3,11 @@ Implementation of the A* path-finding algorithm for battle units to traverse a b
 
 Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Professional 2019 on Windows 11.
 
+Setup
+------------
+To install and configure the program you will need an IDE, such as Visual Studio 2019, and a copy of the source code.
+The code does not use any special libraries, and should be easily configured in any environment.  Download the repository to your local matchine and run the program.
+
 Introduction
 ------------
 
