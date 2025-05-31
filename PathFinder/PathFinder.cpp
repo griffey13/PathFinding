@@ -28,11 +28,11 @@ int main(int argc, char* argv[])
     astar.loadFile(fileName);
     auto path = astar.findPath(PathFinder::heuristic::euclidean, 10);
 
-    // Print the path as X,Y coordinates to the console window
-    astar.printPathCoords(path);
+    // Print the path as X,Y coordinates to console and file
+    astar.printPathCoords(path, "PathOutput.txt");
 
     // Draw the path to the console window using ASCII characters
-    astar.drawPath(path);
+    astar.drawPath(path, "PathVisual.txt");
 
     // Pause to ensure user can see output on console window
     system("pause");
