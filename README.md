@@ -46,6 +46,31 @@ Future Improvements (TODO)
 Extend the algoritm to handle multiple units moving simultaneously:
 * Units may move towards a common target position or to individual distanct target positions.
 * At any given moment, each ground terrain position may be occupied by at most one unit.
+
+Basic Usage
+-----------
+To instatiate the path-finding algorithm class
+```cpp
+    PathFinder::AStar astar;
+```
+To load a JSON file compatible with [<ins>Risky Tilemap</ins>](https://riskylab.com/tilemap)
+```cpp
+    astar.loadFile('your_JSON_filename_here.json');
+```
+To calculate the path from the starting position to the target positon
+```cpp
+    auto path = astar.findPath(PathFinder::heuristic::euclidean, 10);
+```
+To print the path as X,Y coordinates to the console window
+```cpp
+    astar.printPathCoords(path);
+```
+
+To draw the path to the console window using ASCII characters
+```cpp
+    astar.drawPath(path);
+```
+
 #### Usage example
 ```cpp
 #include <iostream>
