@@ -50,7 +50,7 @@ namespace PathFinder
 	* @param[in] b   Second Node.
 	* @return True if first node huestic value less than second node.
     */
-	inline bool operator< (const Node& a, const Node& b) { return a.f < b.f; }
+	inline bool operator< (const Node& a, const Node& b) { return a.f > b.f; }
 
 	//----------------------------------------------------------------------------
 	// class AStar
