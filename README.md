@@ -5,8 +5,13 @@ Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Pr
 
 Setup
 ------------
-To install and configure the program you will need an IDE, such as Visual Studio 2019, and a copy of the source code.
-The code does not use any special libraries, and should be easily configured in any environment.  Download the repository to your local matchine and run the program.
+To install and compile the program you will need an IDE, such as Visual Studio 2019, and a copy of the source code.
+The code does not use any special libraries, and should be easily compiled.  
+
+* Download the repository to your local machine.
+* Open the Visual Studio Solution **PathFinder.sln**
+* Build the solution via **Build->Build Solution**
+* Run the executable, **PathFinder.exe**
 
 Introduction
 ------------
