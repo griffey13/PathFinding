@@ -1,5 +1,5 @@
 # Path-Finding Algorithm
-Implementation of the A* path-finding algorithm  for battle units to traverse a battlefield from a starting position to a target position. 
+Implementation of the A* path-finding algorithm for battle units to traverse a battlefield from a starting position to a target position. 
 
 Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Professional 2019 on Windows 11.
 
@@ -19,12 +19,12 @@ Input to the Algorithm
           - **Elevated Terrain:** Unreachable by battle units.
 
 2. **Battle Unit**
-    -  A user defined or randomly positioned single battle unit. Assume that a unit always occupies exactly on poisiton on the battlefiled.
+    -  A user defined or randomly positioned single battle unit. Assume that a unit always occupies exactly one position on the battlefield.
   
 3. **Target Position**
     -  A user defined or randomly chosen target position for the unit.
 
-**Note:** The algoritm supports the use of JSON format files compatible with [<ins>Risky Tilemap</ins>](https://riskylab.com/tilemap). A sample JSON is available at [<ins>this link</ins>](https://gist.github.com/dgehriger/80817b039498ed60657da048f980233f).
+**Note:** The algorithm supports the use of JSON format files compatible with [<ins>Risky Tilemap</ins>](https://riskylab.com/tilemap). A sample JSON is available at [<ins>this link</ins>](https://gist.github.com/dgehriger/80817b039498ed60657da048f980233f).
 
 The layers[0].data field in this JSON format has *row x columns* entries, where:
 * "0" represents the starting position for the battle unit
@@ -35,7 +35,7 @@ The layers[0].data field in this JSON format has *row x columns* entries, where:
 Output of the Algorithm
 ------------
 * A list of positions for the battle unit to travel from its starting position to the target position.
-* An ASCII representation of the traveled path in the grid from its starting positon to the target position.
+* An ASCII representation of the traveled path in the grid from its starting position to the target position.
 
 Constraints of the Algorithm
 ------------
@@ -45,8 +45,8 @@ Constraints of the Algorithm
 
 Future Improvements (TODO)
 ------------
-Extend the algoritm to handle multiple units moving simultaneously:
-* Units may move towards a common target position or to individual distanct target positions.
+Extend the algorithm to handle multiple units moving simultaneously:
+* Units may move towards a common target position or to individual distinct target positions.
 * At any given moment, each ground terrain position may be occupied by at most one unit.
 
 Basic Usage
@@ -59,7 +59,7 @@ To load a JSON file compatible with [<ins>Risky Tilemap</ins>](https://riskylab.
 ```cpp
     astar.loadFile('your_JSON_filename_here.json');
 ```
-To calculate the path from the starting position to the target positon
+To calculate the path from the starting position to the target position
 ```cpp
     auto path = astar.findPath(PathFinder::heuristic::euclidean, 10);
 ```
