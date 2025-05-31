@@ -1,5 +1,13 @@
-# PathFinding algorithm
+# Path-Finding algorithm
 Implementation of the A* path-finding algorithm written with C++ (C++17) and Microsoft Visual Studio Professional 2019.
+
+Introduction
+------------
+
+The aim of this project is to provide a path-finding library that can be easily implemented.
+
+Note that this project only provides path-finding algorithms for 2D space.
+
 
 #### Usage example
 ```cpp
