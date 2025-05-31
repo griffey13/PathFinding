@@ -50,6 +50,7 @@ Output of the Algorithm
 ------------
 * A list of positions for the battle unit to travel from its starting position to the target position.
 * An ASCII representation of the traveled path in the grid from its starting position to the target position.
+**Note:** The output can also be written to a file for future analysis.
 
 Constraints of the Algorithm
 ------------
