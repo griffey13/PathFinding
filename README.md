@@ -14,6 +14,8 @@ The code does not use any special libraries, and should be easily compiled.
 * Open the Visual Studio Solution **PathFinder.sln**
 * Build the solution via **Build->Build Solution**
 * Run the executable, **PathFinder.exe**
+* A sample input file **take_home_project.json** is provided in the **Input** folder
+* The output generated from the sample input file is provided in the **Output** folder
 
 Introduction
 ------------
