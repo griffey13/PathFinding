@@ -78,9 +78,19 @@ To print the path as X,Y coordinates to the console window
     astar.printPathCoords(path);
 ```
 
+To print the path as X,Y coordinates to a file
+```cpp
+    astar.printPathCoords(path, "yourFileNameHere.txt");
+```
+
 To draw the path to the console window using ASCII characters
 ```cpp
     astar.drawPath(path);
+```
+
+To draw the path to a file using ASCII characters
+```cpp
+    astar.drawPath(path, "yourFileNameHere.txt");
 ```
 
 Development
@@ -130,10 +140,10 @@ int main( int argc, char* argv[] )
     auto path = astar.findPath(PathFinder::heuristic::euclidean, 10);
 
     // Print the path as X,Y coordinates to the console window
-    astar.printPathCoords(path);
+    astar.printPathCoords(path, "PathOutput.txt");
 
     // Draw the path to the console window using ASCII characters
-    astar.drawPath(path);
+    astar.drawPath(path, "PathVisual.txt");
 
     // Pause to ensure user can see output on console window
     system("pause");
