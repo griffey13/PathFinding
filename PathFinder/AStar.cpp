@@ -1,211 +1,313 @@
-#pragma once
+#include "AStar.h"
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include "Json.hpp"
 
-#include <queue>
-#include <vector>
-#include <string>
-#include <functional>
-#include "Point.hpp"
+using namespace std;
+using namespace placeholders;
+
+// Simplify namespace access to JSON parser
+using json = nlohmann::json;
 
 namespace PathFinder
 {
-	using uint = unsigned int;
-	using HeuristicFunction = std::function<uint(const Point&, const Point&, int)>;
-
-	struct Node
+	AStar::AStar() :
+		m_weight(1),
+		m_dimensions(0, 0),
+		m_startPos(0, 0),
+		m_targetPos(0, 0),
+		m_directions({ { -1,  0 }, { 1, 0 }, { 0, 1 }, { 0,  -1 } })
 	{
-		/*
-		* @brief   Constructor
-		* @details Initialized with default values
-		*/
-		Node() : pos(0, 0), parent(-1, -1), f(0), g(0), h(0) {}
+	}
 
-		/*
-		* @brief   Constructor
-		* @details Initialized with default values for values not provided
-		* @param[in] pos  2D position of Node.
-		* @param[in] f    Total cost function value
-		*/
-		Node(const Point& pos, uint f) : pos(pos), parent(-1, 1), f(f), g(0), h(0) {}
-
-		/*
-		* @brief Constructor
-		* @param[in] pos     2D position of Node.
-        * @param[in] parent  2D position of Node's parent
-		* @param[in] f       Total cost function value
-		* @param[in] g       Total cost function value
-		* @param[in] g       Total cost function value
-		*/
-		Node(const Point& pos, const Point& parent, uint f, uint g, uint h) : pos(pos), parent(parent), f(f), g(g), h(h) {}
-
-		Point pos;    /// 2D position of Node
-		Point parent; /// Parent position of this Node
-		uint f;       /// F = G + H (Total cost function)
-		uint g;       /// Cost of the path from starting node to this node
-		uint h;       /// Heuristic function cost estimate from this node to target node
-	};
-
-	/*
-    * @brief Reverse std::priority_queue to get the smallest element on top
-    * @param[in] a   First Node.
-	* @param[in] b   Second Node.
-	* @return True if first node huestic value greater than second node.
-    */
-	inline bool operator< (const Node& a, const Node& b) { return a.f > b.f; }
-
-	//----------------------------------------------------------------------------
-	// class AStar
-	//----------------------------------------------------------------------------
-	/*
-	 * @brief Defines a simple A Star path finding algorithm with some
-	 *        simple utility functions
-	 */
-	class AStar
+	bool AStar::loadFile(const string& fileName)
 	{
-	public:
+		// Open the JSON file, report error
+		ifstream file(fileName);
+		if (!file.is_open()) {
+			cerr << "Error: Could not open file: " << fileName << "\n";
+			return false;
+		}
+		cout << "Opened file: " << fileName << "\n";
 
-		/*
-		* @brief Default constructor
-		*/
-		AStar();
+		// Parse the JSON file
+		json jsonData;
+		try {
+			jsonData = json::parse(file);
+		}
+		catch (json::parse_error& e) {
+			cerr << "JSON parse error: " << e.what() << "\n";
+			return false;
+		}
 
-		/*
-		* @brief Find path from starting position (startPos) to target positon (targetPos) using
-		*        A* algorithm
-		* @param[in] weight Weight value used on heuristic function
-		* @return Complete path from starting position to target position
-		*/
-		std::vector<Point> findPath(HeuristicFunction heuristicFunc, int weight = 1);
+		// Parse the tilewidth x tileheight
+		int tileWidth = -1;
+		int tileHeight = -1;
+		for (const auto& tileset : jsonData["tilesets"]) {
+			tileWidth = tileset["tilewidth"];
+			tileHeight = tileset["tileheight"];
+			cout << "Tile Size: " << tileWidth << " x " << tileHeight << "\n";
+		}
+		if (tileWidth == -1 || tileHeight == -1 || tileWidth < 1 || tileHeight < 1)
+		{
+			cerr << "Error: Invalid Tile size: " << tileWidth << " x " << tileHeight << "\n";
+			return false;
+		}
 
-		/*
-		* @brief Print path coordinates from starting position (startPos) to 
-		*        target positon (targetPos) to console window as list of 2D coordinates
-		*        and a file if desired
-		* @note This function will always print to the console
-		* @param[in] path Complete path from starting position to target position
-		* @param[in] fileName Name of file to print to. Default is not to print to a file
-		*/
-		void printPathCoords(const std::vector<Point>& path, const std::string fileName = "");
+		// Parse the layers
+		auto layers = jsonData["layers"];
+		vector<int> dataField;
+		for (const auto& element : layers)
+		{
+			try
+			{
+				dataField = element.at("data").get<vector<int>>();
+			}
+			catch (const out_of_range& /* exception */)
+			{
+				cerr <<
+					"Error in JSON data from `{}`: unknown layersType: '{}'.",
+					file;
+				return false;
+			}
+		}
 
-		/*
-		* @brief Draw path from starting position (startPos) to target positon (targetPos) to
-		*        console window inside complete grid and a file if desired
-        * @note This function will always print to the console
-		* @param[in] path Complete path from starting position to target position
-		* @param[in] fileName Name of file to print to. Default is not to print to a file
-		*/
-		void drawPath(const std::vector<Point>& path, const std::string fileName = "");
+		// Set the tile data 
+		setTileData(dataField, tileWidth, tileHeight);
 
-		/*
-		* @brief Set the tile gird data
-		* @param[in] dataIn The tile grid as read from JSON file
-		* @param[in] xDim   The xDim of the tile grid
-		* @param[in] yDim   The yDim of the tile grid
-		*/
-		void setTileData(const std::vector<int> dataIn, int xDim, int yDim);
+		// Find the starting position indicated by a value of 0 inside the grid
+		int startPos;
+		auto it = find(dataField.begin(), dataField.end(), 0);
+		if (it != dataField.end()) {
+			startPos = distance(dataField.begin(), it);
+			cout << "Value " << 0 << " (starting position) found at position: " << startPos << endl;
+		}
+		else {
+			cout << "Value " << 0 << " (starting position) not found in the tile." << endl;
+			return false;
+		}
 
-		/*
-		* @brief Set the starting position
-		* @param[in] startPos The tile grid start postion
-		*/
-		void setStartPos(const Point& startPos) { m_startPos = startPos; }
+		// Find the target position, indicated by a value of 8;
+		int targetPos;
+		it = find(dataField.begin(), dataField.end(), 8);
+		if (it != dataField.end()) {
+			targetPos = distance(dataField.begin(), it);
+			cout << "Value " << 8 << " (target positon) found at position: " << targetPos << endl;
+		}
+		else {
+			cout << "Value " << 8 << " (target positon) not found in the tile." << endl;
+			return false;
+		}
 
-		/*
-		* @brief Set the target position
-		* @param[in] targetPos The tile grid target postion
-		*/
-		void setTargetPos(const Point& targetPos) { m_targetPos = targetPos; }
+		//Close the file
+		file.close();
 
-		/*
-		* @brief Load the JSON file
-		* @param[in] fileName Name of JSON file to load
-		* @return True if the file load successfully otherwise false
-		*/
-		bool loadFile(const std::string& fileName);
+		// Set the starting position and target position
+		setStartPos(convertTo2D(startPos));
+		setTargetPos(convertTo2D(targetPos));
 
-	private:
+		return true;
+	}
 
-		/*
-		* @brief   Builds the path
-		*/
-		std::vector<Point> buildPath() const;
-
-		/*
-		* @brief Determine if 2D tile cell is inside grid limts/dimensions
-		* @param[in] pos 2D position in grid to check
-		* @return True if cell is valid
-		*/
-		bool InsideGrid(const Point& pos) const;
-
-		/*
-		* @brief Determine if grid cell is walkable or blocked
-		* @return True if cell is blocked/unwalkable
-		*/
-		bool isBlocked(int index) const { return (m_grid[index] == 3); }
-
-		/*
-		* @brief Returns a 1D index based on a 2D coordinate using row-major layout
-		* @param[in] pos The 2D grid position to convert
-		* @return The 1D flat position
-		*/
-		int convertTo1D(const Point& pos) const { return (pos.y * m_dimensions.x) + pos.x; }
-
-		/*
-		* @brief Returns a 2D index based on a 1D index using row-major layout
-		* @param[in] pos The 1D grid position to convert
-		* @return The 2D flat position
-		*/
-		Point convertTo2D(const int& pos) const;
-
-		int m_weight;                            /// Weight used on heuristic function
-		Point m_dimensions;                      /// X and Y dimensions of the grid. 
-		Point m_startPos;                        /// Starting position for the path
-		Point m_targetPos;                       /// Target position for the path
-		std::priority_queue<Node> m_openList;    /// Open list queue of nodes
-		std::vector<bool> m_closedList;          /// Closed list 
-		std::vector<Node> m_cameFrom;            /// Came from list
-		std::vector<int> m_grid;                 /// The tile grid
-		std::vector<Point> m_directions;         /// All possible directions to take
-		HeuristicFunction m_heuristic;           /// Heuristic function to be used
-	};
-
-	namespace heuristic
+	vector<Point> AStar::findPath(HeuristicFunction heuristicFunc, int weight)
 	{
+		// Initialize and set size of variables
+		m_weight = weight;
+		m_heuristic = bind(heuristicFunc, _1, _2, _3);
+		m_cameFrom.resize(m_grid.size());
+		m_closedList.resize(m_grid.size(), false);
 
-		/*
-		* @brief Calculate the Manhattan heuristic
-		* @param[in] v1 The first grid position
-		* @param[in] v2 The second grid position
-		* @param[in] weight Heuristic weight value
-		* @return The Manhattan heuristic value
-		*/
-		uint manhattan(const Point& v1, const Point& v2, int weight = 1);
+		m_cameFrom[convertTo1D(m_startPos)].parent = m_startPos;
+		m_openList.push(Node(m_startPos, 0));
 
-		/*
-		* @brief Calculate the Euclidean heuristic
-		* @param[in] v1 The first grid position
-		* @param[in] v2 The second grid position
-		* @param[in] weight Heuristic weight value
-		* @return The Euclidean heuristic value
-		*/
-		uint euclidean(const Point& v1, const Point& v2, int weight = 1);
+		uint fNew, gNew, hNew;
+		Point currentPos;
 
+		while (!m_openList.empty())
+		{
+			// Get the node with the least f value
+			currentPos = m_openList.top().pos;
 
-		/*
-		* @brief Calculate the Euclidean heuristic without the sqrt
-		* @param[in] v1 The first grid position
-		* @param[in] v2 The second grid position
-		* @param[in] weight Heuristic weight value
-		* @return The Euclidean heuristic value without the sqrt
-		*/
-		uint euclideanNoSQR(const Point& v1, const Point& v2, int weight = 1);
+			// Stop when target positon is reached
+			if (currentPos == m_targetPos)
+				break;
 
-		/*
-		* @brief Calculate the Dijkstra heuristic
-		* @param[in] v1 The first grid position
-		* @param[in] v2 The second grid position
-		* @param[in] weight Heuristic weight value
-		* @return The Dijkstra heuristic value
-		*/
-		uint dijkstra(const Point& v1, const Point& v2, int weight = 1);
+			// Remove current position from openlist via pop
+			// Add current position to the closed list
+			m_openList.pop();
+			m_closedList[convertTo1D(currentPos)] = true;
+
+			// Check the neighbors of the current node
+			for (uint i = 0; i < 4; ++i)
+			{
+				const auto neighborPos = currentPos + m_directions[i];
+				const auto neighborIndex = convertTo1D(neighborPos);
+
+				if (!InsideGrid(neighborPos) || isBlocked(neighborIndex) || m_closedList[neighborIndex] == true)
+					continue;
+
+				// Cost of the path from start node to this node
+				// Heuristic function to estimate cost from this node to target node 
+				// Total cost
+				gNew = m_cameFrom[convertTo1D(currentPos)].g + 1;
+				hNew = m_heuristic(neighborPos, m_targetPos, m_weight);
+				fNew = gNew + hNew;
+
+				if (m_cameFrom[neighborIndex].f == 0 || fNew < m_cameFrom[neighborIndex].f)
+				{
+					m_openList.push(Node(neighborPos, fNew));
+					m_cameFrom[neighborIndex] = { neighborPos, currentPos, fNew, gNew, hNew };
+				}
+			}
+		}
+
+		return buildPath();
+	}
+
+	vector<Point> AStar::buildPath() const
+	{
+		vector<Point> path;
+		auto currentPos = m_targetPos;
+		auto currentIndex = convertTo1D(currentPos);
+
+		// Loop backwards from target position to start position
+		while (!(m_cameFrom[currentIndex].parent == currentPos))
+		{
+			path.push_back(currentPos);
+			currentPos = m_cameFrom[currentIndex].parent;
+			currentIndex = convertTo1D(currentPos);
+		}
+		// Add start positon
+		path.push_back(m_startPos);
+
+		// Reverse order of path
+		reverse(path.begin(), path.end());
+
+		return path;
+	}
+
+	void AStar::printPathCoords(const vector<Point>& path, string fileName)
+	{
+		std::ofstream outputFile(fileName);
+		bool bValidFile = false;
+
+		// Open file
+		if (outputFile.is_open())
+			bValidFile = true;
+
+		// Write to file
+		cout                        << "(X,Y) path coordinates \n";
+		if (bValidFile)  outputFile << "(X,Y) path coordinates \n";
+
+		cout                       << path.size() << " steps taken \n";
+		if (bValidFile) outputFile << path.size() << " steps taken \n";
+		for (const auto& coord : path)
+		{
+			cout                       << "( " << coord.x << " , " << coord.y << " ) \n";
+			if (bValidFile) outputFile << "( " << coord.x << " , " << coord.y << " ) \n";
+		}
+
+		// Close the file
+		if (bValidFile) outputFile.close();
+	}
+
+	void AStar::drawPath(const vector<Point>& path, string fileName)
+	{
+		std::ofstream outputFile(fileName);
+		bool bValidFile = false;
+
+		// Open file
+		if (outputFile.is_open())
+			bValidFile = true;
+
+		cout << "Visual depiction of Path traveled \n";
+		cout << "LEGEND: \n";
+		cout << "X = Wall \n";
+		cout << "S = Start Postion \n";
+		cout << "T = Target Position \n";
+		cout << "* = Battle Unit Traveled Path \n";
+		cout << ". = Walkable Grid Point \n";
+		cout << "? = Unknown Grid Point, check Tile Map file \n";
+
+		if (bValidFile) {
+			outputFile << "Visual depiction of Path traveled \n";
+			outputFile << "LEGEND: \n";
+			outputFile << "X = Wall \n";
+			outputFile << "S = Start Postion \n";
+			outputFile << "T = Target Position \n";
+			outputFile << "* = Battle Unit Traveled Path \n";
+			outputFile << ". = Walkable Grid Point \n";
+			outputFile << "? = Unknown Grid Point, check Tile Map file \n";
+		}
+
+		for (int yDim = 0; yDim < m_dimensions.y; ++yDim) {
+			for (int xDim = 0; xDim < m_dimensions.x; ++xDim) {
+				char c = '?';
+				int pos = convertTo1D(Point(xDim, yDim));
+				if (m_grid.at(pos) == 3)
+					c = 'X'; // Wall
+				else if (pos == convertTo1D(m_startPos))
+					c = 'S'; // Starting position
+				else if (pos == convertTo1D(m_targetPos))
+					c = 'T'; // Target position
+				else if (find(path.begin(), path.end(), Point(xDim, yDim)) != path.end())
+					c = '*'; // Traversed path
+				else if (m_grid.at(pos) == -1)
+					c = '.'; // Walkable grid point
+				cout                       << c << ' '; // Space delimited
+				if (bValidFile) outputFile << c << ' '; // Space delimited
+			}
+		    cout                       << '\n';
+			if (bValidFile) outputFile << '\n';
+		}
+
+		// Close the file
+		if (bValidFile) outputFile.close();
+	}
+
+	void AStar::setTileData(const vector<int> dataIn, int xDim, int yDim)
+	{
+		m_dimensions.x = xDim;
+		m_dimensions.y = yDim;
+		m_grid = dataIn;
+	}
+
+	bool AStar::InsideGrid(const Point& pos) const
+	{
+		return (pos.x >= 0) && (pos.x < m_dimensions.x) &&
+			(pos.y >= 0) && (pos.y < m_dimensions.y);
+	}
+
+	Point AStar::convertTo2D(const int& pos) const
+	{
+		int xPos = pos % m_dimensions.x;
+		int yPos = pos / m_dimensions.x;
+
+		return Point(xPos, yPos);
+	}
+
+	uint heuristic::euclidean(const Point& v1, const Point& v2, int weight)
+	{
+		const auto delta = Point::getDelta(v1, v2);
+		return static_cast<uint>(weight * sqrt(pow(delta.x, 2) + pow(delta.y, 2)));
+	}
+
+	uint heuristic::manhattan(const Point& v1, const Point& v2, int weight)
+	{
+		const auto delta = Point::getDelta(v1, v2);
+		return static_cast<uint>(weight * (delta.x + delta.y));
+	}
+
+	uint heuristic::euclideanNoSQR(const Point& v1, const Point& v2, int weight)
+	{
+		const auto delta = Point::getDelta(v1, v2);
+		return static_cast<uint>(weight * (pow(delta.x, 2) + pow(delta.y, 2)));
+	}
+
+	uint heuristic::dijkstra(const Point& v1, const Point& v2, int weight)
+	{
+		const auto delta = Point::getDelta(v1, v2);
+		return static_cast<uint>(weight * (pow(delta.x, 2) + pow(delta.y, 2)));
 	}
 }
