@@ -1,0 +1,40 @@
+Visual depiction of Path traveled 
+LEGEND: 
+X = Wall 
+S = Start Postion 
+T = Target Position 
+* = Battle Unit Traveled Path 
+. = Walkable Grid Point 
+? = Unknown Grid Point, check Tile Map file 
+. . . X . . . . . . . X . . . . X . . . . . . . . . . X . X . . 
+. . . . X . . . X X X X . . . . X . X X X X X . X . . X . X . . 
+. . . . X . . . . . . . . . . . X . X . . . . . X X . . . X X X 
+. . . . X . . . X X X X X X . . X . X . X X X . . X X X . . . X 
+X X . . X . X X X . . . . X . . X . . X X . . . * * * * X X . X 
+. X X . . . X . . . . . . X X X X . X X . . . * * X . * * X . X 
+. . X . . . . X . X X X . X . . . . X . . * * * X X X . S X X X 
+. . X . . . . X . . . X . X . . . . . . * * X X X . X X . . . . 
+. . X X . . . X X . . X . X . . . X X X * X X . . . . X . . ? . 
+. . . X X . . . X . . X . . X . X . . X * X . . . * * * X . . . 
+. . . . . . . . X X . X X . X X . . . X * X . X . * X * X . . . 
+. . . . . . . . . X . . X . . X X . . X * X . X X * X * X X X X 
+X X X X X . . X X X . . X . . . X . . . * X . . X * X * X . X . 
+. . . . . X X . . . . . X X X X X X . . * X X X X * X * X . X . 
+. . . X X . . . . X . . . . . . . X . . * . . . X * X * X . X . 
+. . X X . . . . . X X X X . . . . . . . * . . X X * X * X . X . 
+. . X . . . . . . . . . X . . . * * * * * . X X . * X * X . X . 
+. X X . . . X . . X . . X . * * * X X X X X X * * * X * X . X . 
+. X . . . . X . . X X . X X * X X X . . . . . * X . . * . . X . 
+. . . . X X X . . . X . . X * X . . . . . * * * X X . * X X X . 
+X X X X . X . . . . X X . X * * * * * * * * X . . X X * * * * * 
+X . . X . X X X X . . X . X X X X . . X . . X X . . X X . . . * 
+. . . . . X . . X . . . X X . . X . X X . X . X . . . X X . . * 
+. X X . . X . . X . . . . X . . X . . . . X . X . . . . X X . * 
+. . X X . X . . X . . . . X . . . X X X X . . X . . . . . X . * 
+T * * X . X . . . X X . . . . X . . . . . . X X . X X X X X . * 
+. . * X X X * * * * X . . . . . . X X X X X X . . . . X * * * * 
+X X * X . . * X . * * X . . . . . X . . . . . . . . . X * X X X 
+. . * X . * * X . . * X X . . . X X X . X . . . X . . X * * * * 
+. . * * * * X X . . * * X X X . . . . . X X X X X . . X . . . * 
+. X X X X X X . . . . * * * X X X . . . . . . . . . . X . . . * 
+. X . . . . . . . . . . . * * * * * * * * * * * * * * * * * * * 
