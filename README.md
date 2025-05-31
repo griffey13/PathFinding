@@ -276,6 +276,14 @@ Value 8 (target positon) found at position: 800
 ( 2 , 25 )
 ( 1 , 25 )
 ( 0 , 25 )
+Visual depiction of Path traveled
+LEGEND:
+X = Wall
+S = Start Postion
+T = Target Position
+* = Battle Unit Traveled Path
+. = Walkable Grid Point
+? = Unknown Grid Point, check Tile Map file
 . . . X . . . . . . . X . . . . X . . . . . . . . . . X . X . .
 . . . . X . . . X X X X . . . . X . X X X X X . X . . X . X . .
 . . . . X . . . . . . . . . . . X . X . . . . . X X . . . X X X
