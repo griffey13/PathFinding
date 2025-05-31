@@ -17,8 +17,10 @@ Input to the Algorithm
     -  Each position is either:
           - **Ground Terrain:** Occupiable by a single battle unit.
           - **Elevated Terrain:** Unreachable by battle units.
+
 2. **Battle Unit**
-    -  A user defined or randomly positioned single battle unit. Assume that a unit always occupies exactly on poisiton on the battlefiled
+    -  A user defined or randomly positioned single battle unit. Assume that a unit always occupies exactly on poisiton on the battlefiled.
+  
 3. **Target Position**
     -  A user defined or randomly chosen target position for the unit.
 
@@ -30,7 +32,7 @@ The layers[0].data field in this JSON format has *row x columns* entries, where:
 * "3" represents elevated terrain (depending on icon set)
 * "-1" represents reachable positions
 
-Output to the Algorithm
+Output of the Algorithm
 ------------
 * A list of positions for the battle unit to travel from its starting position to the target position.
 * An ASCII representation of the traveled path in the grid from its starting positon to the target position.
@@ -84,6 +86,9 @@ Layout:
 	|-- benchmark    # benchmarks (empty)
     `-- visual       # visualization (empty)
 
+Usage and Results
+------------
+
 #### Usage example
 ```cpp
 #include <iostream>
@@ -127,6 +132,183 @@ int main( int argc, char* argv[] )
 
     return 0;
 }
+```
+#### Results example
+
+```cpp
+Enter the JSON input filename (press Enter to use 'take_home_project.json'):
+
+Opened file: take_home_project.json
+Tile Size: 32 x 32
+Value 0 (starting position) found at position: 220
+Value 8 (target positon) found at position: 800
+(X,Y) path coordinates
+132 steps taken.
+( 28 , 6 )
+( 28 , 5 )
+( 27 , 5 )
+( 27 , 4 )
+( 26 , 4 )
+( 25 , 4 )
+( 24 , 4 )
+( 24 , 5 )
+( 23 , 5 )
+( 23 , 6 )
+( 22 , 6 )
+( 21 , 6 )
+( 21 , 7 )
+( 20 , 7 )
+( 20 , 8 )
+( 20 , 9 )
+( 20 , 10 )
+( 20 , 11 )
+( 20 , 12 )
+( 20 , 13 )
+( 20 , 14 )
+( 20 , 15 )
+( 20 , 16 )
+( 19 , 16 )
+( 18 , 16 )
+( 17 , 16 )
+( 16 , 16 )
+( 16 , 17 )
+( 15 , 17 )
+( 14 , 17 )
+( 14 , 18 )
+( 14 , 19 )
+( 14 , 20 )
+( 15 , 20 )
+( 16 , 20 )
+( 17 , 20 )
+( 18 , 20 )
+( 19 , 20 )
+( 20 , 20 )
+( 21 , 20 )
+( 21 , 19 )
+( 22 , 19 )
+( 23 , 19 )
+( 23 , 18 )
+( 23 , 17 )
+( 24 , 17 )
+( 25 , 17 )
+( 25 , 16 )
+( 25 , 15 )
+( 25 , 14 )
+( 25 , 13 )
+( 25 , 12 )
+( 25 , 11 )
+( 25 , 10 )
+( 25 , 9 )
+( 26 , 9 )
+( 27 , 9 )
+( 27 , 10 )
+( 27 , 11 )
+( 27 , 12 )
+( 27 , 13 )
+( 27 , 14 )
+( 27 , 15 )
+( 27 , 16 )
+( 27 , 17 )
+( 27 , 18 )
+( 27 , 19 )
+( 27 , 20 )
+( 28 , 20 )
+( 29 , 20 )
+( 30 , 20 )
+( 31 , 20 )
+( 31 , 21 )
+( 31 , 22 )
+( 31 , 23 )
+( 31 , 24 )
+( 31 , 25 )
+( 31 , 26 )
+( 30 , 26 )
+( 29 , 26 )
+( 28 , 26 )
+( 28 , 27 )
+( 28 , 28 )
+( 29 , 28 )
+( 30 , 28 )
+( 31 , 28 )
+( 31 , 29 )
+( 31 , 30 )
+( 31 , 31 )
+( 30 , 31 )
+( 29 , 31 )
+( 28 , 31 )
+( 27 , 31 )
+( 26 , 31 )
+( 25 , 31 )
+( 24 , 31 )
+( 23 , 31 )
+( 22 , 31 )
+( 21 , 31 )
+( 20 , 31 )
+( 19 , 31 )
+( 18 , 31 )
+( 17 , 31 )
+( 16 , 31 )
+( 15 , 31 )
+( 14 , 31 )
+( 13 , 31 )
+( 13 , 30 )
+( 12 , 30 )
+( 11 , 30 )
+( 11 , 29 )
+( 10 , 29 )
+( 10 , 28 )
+( 10 , 27 )
+( 9 , 27 )
+( 9 , 26 )
+( 8 , 26 )
+( 7 , 26 )
+( 6 , 26 )
+( 6 , 27 )
+( 6 , 28 )
+( 5 , 28 )
+( 5 , 29 )
+( 4 , 29 )
+( 3 , 29 )
+( 2 , 29 )
+( 2 , 28 )
+( 2 , 27 )
+( 2 , 26 )
+( 2 , 25 )
+( 1 , 25 )
+( 0 , 25 )
+. . . X . . . . . . . X . . . . X . . . . . . . . . . X . X . .
+. . . . X . . . X X X X . . . . X . X X X X X . X . . X . X . .
+. . . . X . . . . . . . . . . . X . X . . . . . X X . . . X X X
+. . . . X . . . X X X X X X . . X . X . X X X . . X X X . . . X
+X X . . X . X X X . . . . X . . X . . X X . . . * * * * X X . X
+. X X . . . X . . . . . . X X X X . X X . . . * * X . * * X . X
+. . X . . . . X . X X X . X . . . . X . . * * * X X X . S X X X
+. . X . . . . X . . . X . X . . . . . . * * X X X . X X . . . .
+. . X X . . . X X . . X . X . . . X X X * X X . . . . X . . ? .
+. . . X X . . . X . . X . . X . X . . X * X . . . * * * X . . .
+. . . . . . . . X X . X X . X X . . . X * X . X . * X * X . . .
+. . . . . . . . . X . . X . . X X . . X * X . X X * X * X X X X
+X X X X X . . X X X . . X . . . X . . . * X . . X * X * X . X .
+. . . . . X X . . . . . X X X X X X . . * X X X X * X * X . X .
+. . . X X . . . . X . . . . . . . X . . * . . . X * X * X . X .
+. . X X . . . . . X X X X . . . . . . . * . . X X * X * X . X .
+. . X . . . . . . . . . X . . . * * * * * . X X . * X * X . X .
+. X X . . . X . . X . . X . * * * X X X X X X * * * X * X . X .
+. X . . . . X . . X X . X X * X X X . . . . . * X . . * . . X .
+. . . . X X X . . . X . . X * X . . . . . * * * X X . * X X X .
+X X X X . X . . . . X X . X * * * * * * * * X . . X X * * * * *
+X . . X . X X X X . . X . X X X X . . X . . X X . . X X . . . *
+. . . . . X . . X . . . X X . . X . X X . X . X . . . X X . . *
+. X X . . X . . X . . . . X . . X . . . . X . X . . . . X X . *
+. . X X . X . . X . . . . X . . . X X X X . . X . . . . . X . *
+T * * X . X . . . X X . . . . X . . . . . . X X . X X X X X . *
+. . * X X X * * * * X . . . . . . X X X X X X . . . . X * * * *
+X X * X . . * X . * * X . . . . . X . . . . . . . . . X * X X X
+. . * X . * * X . . * X X . . . X X X . X . . . X . . X * * * *
+. . * * * * X X . . * * X X X . . . . . X X X X X . . X . . . *
+. X X X X X X . . . . * * * X X X . . . . . . . . . . X . . . *
+. X . . . . . . . . . . . * * * * * * * * * * * * * * * * * * *
+Press any key to continue . . .
 ```
 
 ## Resources
