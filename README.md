@@ -100,7 +100,8 @@ Layout:
 
     .
     |-- Input          # Input Files
-    |-- PathFinder     # Source code
+    |-- Output         # Ouput Files
+    |-- PathFinder     # Source Code
     -- PathFinder.sln  # Visual Studio Solution File
     --ReadMe.md        # Informative ReadMe file
 
