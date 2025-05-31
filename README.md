@@ -61,6 +61,10 @@ Extend the algorithm to handle multiple units moving simultaneously:
 * Units may move towards a common target position or to individual distinct target positions.
 * At any given moment, each ground terrain position may be occupied by at most one unit.
 
+Third Party Code Used
+-----------
+The **nlohmann::json** library is since this json class provides an API for manipulating a JSON value, and is a single header file and easy to use. 
+
 Basic Usage
 -----------
 To instatiate the path-finding algorithm class
