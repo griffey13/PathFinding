@@ -89,12 +89,10 @@ Development
 Layout:
 
     .
-    |-- lib          # browser distribution (empty)
-    |-- src          # source code (algorithms only)
-    |-- test         # test scripts
-    |-- utils        # build scripts (empty)
-	|-- benchmark    # benchmarks (empty)
-    `-- visual       # visualization (empty)
+    |-- Input          # Input Files
+    |-- PathFinder     # Source code
+    -- PathFinder.sln  # Visual Studio Solution File
+    --ReadMe.md        # Informative ReadMe file
 
 Usage and Results
 ------------
