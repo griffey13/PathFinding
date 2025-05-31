@@ -1,4 +1,4 @@
-# Path-Finding algorithm
+# Path-Finding Algorithm
 Implementation of the A* path-finding algorithm  for battle units to traverse a battlefield from a starting position to a target position. 
 
 Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Professional 2019 on Windows 11.
@@ -70,6 +70,19 @@ To draw the path to the console window using ASCII characters
 ```cpp
     astar.drawPath(path);
 ```
+
+Development
+------------
+
+Layout:
+
+    .
+    |-- lib          # browser distribution (empty)
+    |-- src          # source code (algorithms only)
+    |-- test         # test scripts
+    |-- utils        # build scripts (empty)
+	|-- benchmark    # benchmarks (empty)
+    `-- visual       # visualization (empty)
 
 #### Usage example
 ```cpp
