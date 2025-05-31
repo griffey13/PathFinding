@@ -55,8 +55,6 @@ You can set the heuristic function to calculate the distance between two points 
 |-----------|--------------|-------------|
 | euclidean | PathFinder::Heuristic::euclidean | Default (shortest possible line between two points) |
 | manhattan | PathFinder::Heuristic::manhattan | Sum of the absolute differences between the coordinates of the points |
-| octagonal | PathFinder::Heuristic::octagonal | Useful when diagonal movements are allowed |
-| chebyshev | PathFinder::Heuristic::chebyshev | Distance between two points as the maximum difference over any of their axis values |
 | euclideanNoSQR | PathFinder::Heuristic::euclideanNoSQR | Euclidean heuristic without square root  |
 | dijkstra | PathFinder::Heuristic::dijkstra | Always return 0 |
 
