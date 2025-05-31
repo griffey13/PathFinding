@@ -46,6 +46,20 @@ The layers[0].data field in this JSON format has *row x columns* entries, where:
 * "3" represents elevated terrain (depending on icon set)
 * "-1" represents reachable positions
 
+Heuristic function
+----------
+
+You can set the heuristic function to calculate the distance between two points and return the cost.
+
+| Heuristic | C++ Function | Description |
+|-----------|--------------|-------------|
+| euclidean | PathFinder::Heuristic::euclidean | Default (shortest possible line between two points) |
+| manhattan | PathFinder::Heuristic::manhattan | Sum of the absolute differences between the coordinates of the points |
+| octagonal | PathFinder::Heuristic::octagonal | Useful when diagonal movements are allowed |
+| chebyshev | PathFinder::Heuristic::chebyshev | Distance between two points as the maximum difference over any of their axis values |
+| euclideanNoSQR | PathFinder::Heuristic::euclideanNoSQR | Euclidean heuristic without square root  |
+| dijkstra | PathFinder::Heuristic::dijkstra | Always return 0 |
+
 Output of the Algorithm
 ------------
 * A list of positions for the battle unit to travel from its starting position to the target position.
@@ -64,15 +78,11 @@ Extend the algorithm to handle multiple units moving simultaneously:
 * Units may move towards a common target position or to individual distinct target positions.
 * At any given moment, each ground terrain position may be occupied by at most one unit.
 
-* ## Libraries
-
+Libraries
+------------
 Libraries used in this project.
 
 [nlohmann::json](https://github.com/nlohmann/json)
-
-Third Party Code Used
------------
-The **nlohmann::json** library is since this json class provides an API for manipulating a JSON value, and is a single header file and easy to use. 
 
 Basic Usage
 -----------
