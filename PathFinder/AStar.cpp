@@ -185,17 +185,40 @@ namespace PathFinder
 		return path;
 	}
 
-	void AStar::printPathCoords(const vector<Point>& path)
+	void AStar::printPathCoords(const vector<Point>& path, string fileName)
 	{
-		// Print the path as X,Y coordinates to the console window
-		cout << "(X,Y) path coordinates \n";
-		cout << path.size() << " steps taken. \n";
+		std::ofstream outputFile(fileName);
+		bool bValidFile = false;
+
+		// Open file
+		if (outputFile.is_open())
+			bValidFile = true;
+
+		// Write to file
+		cout                        << "(X,Y) path coordinates \n";
+		if (bValidFile)  outputFile << "(X,Y) path coordinates \n";
+
+		cout                       << path.size() << " steps taken \n";
+		if (bValidFile) outputFile << path.size() << " steps taken \n";
 		for (const auto& coord : path)
-			cout << "( " << coord.x << " , " << coord.y << " ) \n";
+		{
+			cout                       << "( " << coord.x << " , " << coord.y << " ) \n";
+			if (bValidFile) outputFile << "( " << coord.x << " , " << coord.y << " ) \n";
+		}
+
+		// Close the file
+		if (bValidFile) outputFile.close();
 	}
 
-	void AStar::drawPath(const vector<Point>& path)
+	void AStar::drawPath(const vector<Point>& path, string fileName)
 	{
+		std::ofstream outputFile(fileName);
+		bool bValidFile = false;
+
+		// Open file
+		if (outputFile.is_open())
+			bValidFile = true;
+
 		cout << "Visual depiction of Path traveled \n";
 		cout << "LEGEND: \n";
 		cout << "X = Wall \n";
@@ -204,6 +227,17 @@ namespace PathFinder
 		cout << "* = Battle Unit Traveled Path \n";
 		cout << ". = Walkable Grid Point \n";
 		cout << "? = Unknown Grid Point, check Tile Map file \n";
+
+		if (bValidFile) {
+			outputFile << "Visual depiction of Path traveled \n";
+			outputFile << "LEGEND: \n";
+			outputFile << "X = Wall \n";
+			outputFile << "S = Start Postion \n";
+			outputFile << "T = Target Position \n";
+			outputFile << "* = Battle Unit Traveled Path \n";
+			outputFile << ". = Walkable Grid Point \n";
+			outputFile << "? = Unknown Grid Point, check Tile Map file \n";
+		}
 
 		for (int yDim = 0; yDim < m_dimensions.y; ++yDim) {
 			for (int xDim = 0; xDim < m_dimensions.x; ++xDim) {
@@ -219,10 +253,15 @@ namespace PathFinder
 					c = '*'; // Traversed path
 				else if (m_grid.at(pos) == -1)
 					c = '.'; // Walkable grid point
-				cout << c << ' '; // Space delimited
+				cout                       << c << ' '; // Space delimited
+				if (bValidFile) outputFile << c << ' '; // Space delimited
 			}
-			cout << '\n';
+		    cout                       << '\n';
+			if (bValidFile) outputFile << '\n';
 		}
+
+		// Close the file
+		if (bValidFile) outputFile.close();
 	}
 
 	void AStar::setTileData(const vector<int> dataIn, int xDim, int yDim)
