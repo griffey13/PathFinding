@@ -1,7 +1,7 @@
 # Path-Finding algorithm
 Implementation of the A* path-finding algorithm  for battle units to traverse a battlefield from a starting position to a target position. 
 
-Algorith was written and tested with C++ (C++17) and Microsoft Visual Studio Professional 2019 on Windows 11.
+Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Professional 2019 on Windows 11.
 
 Introduction
 ------------
