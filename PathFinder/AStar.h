@@ -48,7 +48,7 @@ namespace PathFinder
     * @brief Reverse std::priority_queue to get the smallest element on top
     * @param[in] a   First Node.
 	* @param[in] b   Second Node.
-	* @return True if first node huestic value less than second node.
+	* @return True if first node huestic value greater than second node.
     */
 	inline bool operator< (const Node& a, const Node& b) { return a.f > b.f; }
 
@@ -188,5 +188,24 @@ namespace PathFinder
 		* @return The Euclidean heuristic value
 		*/
 		uint euclidean(const Point& v1, const Point& v2, int weight = 1);
+
+
+		/*
+		* @brief Calculate the Euclidean heuristic without the sqrt
+		* @param[in] v1 The first grid position
+		* @param[in] v2 The second grid position
+		* @param[in] weight Heuristic weight value
+		* @return The Euclidean heuristic value without the sqrt
+		*/
+		uint euclideanNoSQR(const Point& v1, const Point& v2, int weight = 1);
+
+		/*
+		* @brief Calculate the Dijkstra heuristic
+		* @param[in] v1 The first grid position
+		* @param[in] v2 The second grid position
+		* @param[in] weight Heuristic weight value
+		* @return The Dijkstra heuristic value
+		*/
+		uint dijkstra(const Point& v1, const Point& v2, int weight = 1);
 	}
 }
