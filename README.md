@@ -24,6 +24,28 @@ Input to the Algorithm
 
 **Note:** The algoritm supports the use of JSON format files compatible with [<ins>Risky Tilemap</ins>](https://riskylab.com/tilemap). A sample JSON is available at [<ins>this link</ins>](https://gist.github.com/dgehriger/80817b039498ed60657da048f980233f).
 
+The layers[0].data field in this JSON format has *row x columns* entries, where:
+* "0" represents the starting position for the battle unit
+* "8" represents the target position (depending on icon set)
+* "3" represents elevated terrain (depending on icon set)
+* "-1" represents reachable positions
+
+Output to the Algorithm
+------------
+* A list of positions for the battle unit to travel from its starting position to the target position.
+* An ASCII representation of the traveled path in the grid from its starting positon to the target position.
+
+Constraints of the Algorithm
+------------
+* The movement of a unit on the battlefield from one positon to the next is **discrete** and occurs in single steps. Units never occupy a position partially.
+* Units can only **travel horizontally** (left-right) or **vertically** (forward-backward).
+* The algorithm is capable of **backtracking** and finding a **valid path**, even in complex scenarios.
+
+Future Improvements (TODO)
+------------
+Extend the algoritm to handle multiple units moving simultaneously:
+* Units may move towards a common target position or to individual distanct target positions.
+* At any given moment, each ground terrain position may be occupied by at most one unit.
 #### Usage example
 ```cpp
 #include <iostream>
