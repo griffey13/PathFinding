@@ -90,3 +90,9 @@ int main( int argc, char* argv[] )
     return 0;
 }
 ```
+
+## Resources
+
+* [A* algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm)
+* [Risky Tilemap](https://riskylab.com/tilemap)
+* [Sample File](https://gist.github.com/dgehriger/80817b039498ed60657da048f980233f)
