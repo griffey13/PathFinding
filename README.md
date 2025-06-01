@@ -89,7 +89,7 @@ Extend the algorithm to handle multiple units moving simultaneously:
 * Units may move towards a common target position or to individual distinct target positions.
 * At any given moment, each ground terrain position may be occupied by at most one unit.
 
-## File descriptions
+## File Descriptions
 | Class            | Description                                                                          | Location  |
 | ---------------- | ------------------------------------------------------------------------------------ |-----------|
 | Point            | A simple 2-element vector point class used for holding 2D corrdinates of a grid.     | Point.hpp  |
