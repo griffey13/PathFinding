@@ -77,35 +77,13 @@ namespace PathFinder
 		setTileData(dataField, tileWidth, tileHeight);
 
 		// Find the starting position indicated by a value of 0 inside the grid
-		int startPos;
-		auto it = find(dataField.begin(), dataField.end(), 0);
-		if (it != dataField.end()) {
-			startPos = distance(dataField.begin(), it);
-			cout << "Value " << 0 << " (starting position) found at position: " << startPos << endl;
-		}
-		else {
-			cout << "Value " << 0 << " (starting position) not found in the tile." << endl;
-			return false;
-		}
+		if (!getStartPos(dataField)) return false;
 
 		// Find the target position, indicated by a value of 8;
-		int targetPos;
-		it = find(dataField.begin(), dataField.end(), 8);
-		if (it != dataField.end()) {
-			targetPos = distance(dataField.begin(), it);
-			cout << "Value " << 8 << " (target positon) found at position: " << targetPos << endl;
-		}
-		else {
-			cout << "Value " << 8 << " (target positon) not found in the tile." << endl;
-			return false;
-		}
+		if (!getTargetPos(dataField)) return false;
 
 		// Close the file
 		file.close();
-
-		// Set the starting position and target position
-		setStartPos(convertTo2D(startPos));
-		setTargetPos(convertTo2D(targetPos));
 
 		return true;
 	}
@@ -258,7 +236,7 @@ namespace PathFinder
 				cout                       << c << ' '; // Space delimited
 				if (bValidFile) outputFile << c << ' '; // Space delimited
 			}
-		        cout                       << '\n';
+		    cout                       << '\n';
 			if (bValidFile) outputFile << '\n';
 		}
 
@@ -273,10 +251,44 @@ namespace PathFinder
 		m_grid = dataIn;
 	}
 
+	bool AStar::getStartPos(const std::vector<int> dataField)
+	{
+		// Find the starting position indicated by a value of 0 inside the grid
+		int startPos;
+		auto it = find(dataField.begin(), dataField.end(), 0);
+		if (it != dataField.end()) {
+			startPos  = distance(dataField.begin(), it);
+			m_startPos = convertTo2D(startPos);
+			cout << "Value " << 0 << " (starting position) found at position: " << startPos << endl;
+			return true;
+		}
+		else {
+			cout << "Value " << 0 << " (starting position) not found in the tile." << endl;
+			return false;
+		}
+	}
+
+	bool AStar::getTargetPos(const std::vector<int> dataField)
+	{
+		// Find the target position, indicated by a value of 8;
+		int targetPos;
+		auto it = find(dataField.begin(), dataField.end(), 8);
+		if (it != dataField.end()) {
+			targetPos  = distance(dataField.begin(), it);
+			m_targetPos = convertTo2D(targetPos);
+			cout << "Value " << 8 << " (target positon) found at position: " << targetPos << endl;
+			return true;
+		}
+		else {
+			cout << "Value " << 8 << " (target positon) not found in the tile." << endl;
+			return false;
+		}
+	}
+
 	bool AStar::InsideGrid(const Point& pos) const
 	{
 		return (pos.x >= 0) && (pos.x < m_dimensions.x) &&
-		       (pos.y >= 0) && (pos.y < m_dimensions.y);
+			   (pos.y >= 0) && (pos.y < m_dimensions.y);
 	}
 
 	Point AStar::convertTo2D(const int& pos) const
