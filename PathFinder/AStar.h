@@ -104,16 +104,18 @@ namespace PathFinder
 		void setTileData(const std::vector<int> dataIn, int xDim, int yDim);
 
 		/*
-		* @brief Set the starting position
-		* @param[in] startPos The tile grid start postion
+		* @brief Get the starting position from provided tile grid
+		* @param[in] dataField The tile grid
+		* @return True if start position found
 		*/
-		void setStartPos(const Point& startPos) { m_startPos = startPos; }
+		bool getStartPos(const std::vector<int> dataField);
 
 		/*
-		* @brief Set the target position
-		* @param[in] targetPos The tile grid target postion
+		* @brief Get the target position from provided tile grid
+		* @param[in] targetPos The tile grid 
+		* @return True if target position found
 		*/
-		void setTargetPos(const Point& targetPos) { m_targetPos = targetPos; }
+		bool getTargetPos(const std::vector<int> dataField);
 
 		/*
 		* @brief Load the JSON file
