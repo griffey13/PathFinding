@@ -10,7 +10,7 @@ Introduction
 
 The aim of this project is to provide a path-finding library that can be easily implemented.
 
-Note that this project only provides path-finding algorithms for 2D space.
+**Note:** This project only provides path-finding algorithms for 2D space.
 
 Setup
 ------------
@@ -76,12 +76,9 @@ Output of the Algorithm
 
 | Output | Description | Note |
 |-----------|--------------|-------------|
-| File | A list of positions the battle unit traveled from its starting position to the target position | Optional output |
-| File | An ASCII representation of the traveled path in the grid from its starting position to the target position | Optional output |
-| Console Window | Contents of PathOutout.txt and PathVisual.txt pretty printed to the terminal window | Always printed  |
-
-**Note:** The output can also be written to a file for future analysis.
-**Note:** The file names for each output can be provided by the user. 
+| File | A list of positions the battle unit traveled from its starting position to the target position | Optional output. Filename provided by user. |
+| File | An ASCII representation of the traveled path in the grid from its starting position to the target position | Optional output. Filename provided by user. |
+| Console Window | Contents of optional output files pretty printed to the terminal window. | Always printed  |
 
 Constraints of the Algorithm
 ------------
@@ -103,7 +100,7 @@ Extend the algorithm to handle multiple units moving simultaneously:
 
 | Namespace        | Description                                                                          | Location  |
 | ---------------- | ------------------------------------------------------------------------------------ |-----------|
-| heuristic        | Contains a function that computes the heuristic of a battle unit, ie. the estimate of the distance from the current location to the goal. | AStrar.h, AStar.cpp |
+| heuristic        | Contains a function that computes the heuristic of a battle unit, i.e. the estimate of the distance from the current location to the goal. | AStrar.h, AStar.cpp |
 | Pathfinder            | Contains the _AStar_ and _Point_ class | Astar.hpp, Astar.cpp |
 
 | File             | Description                                                                          |
@@ -125,9 +122,7 @@ Extend the algorithm to handle multiple units moving simultaneously:
 
 Libraries
 ------------
-This project uses a a third party JSON library which provides an API for manipulating and parsing JSON files.
-
-[nlohmann::json](https://github.com/nlohmann/json)
+This project uses a a third party JSON library which provides an API for manipulating and parsing JSON files which can be located at [nlohmann::json](https://github.com/nlohmann/json)
 
 Basic Usage
 -----------
@@ -140,7 +135,7 @@ To load a JSON file compatible with [<ins>Risky Tilemap</ins>](https://riskylab.
     astar.loadFile('your_JSON_filename_here.json');
 ```
 
-An alternative to loading a JSON file to obtain the battlefield grid is to directly specify thye battlergrid yourself as provided below
+An alternative to loading a JSON file to obtain the battlefield grid is to directly specify the battlergrid  as provided below
 ```cpp
     std::vector<int> dataField = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                                    -1, -1, -1,  3,  3, 3, -1, -1, -1, -1, 
@@ -153,11 +148,12 @@ An alternative to loading a JSON file to obtain the battlefield grid is to direc
                                    -1, -1, -1,  3,  3,  3,  3,  3,  3, -1, 
                                    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
     astar.setTileData(dataField, 10, 10);
+
     // Find the starting position indicated by a value of 0 inside the grid
     if (!getStartPos(dataField)) return false;
 
-	// Find the target position, indicated by a value of 8;
-	if (!getTargetPos(dataField)) return false;
+    // Find the target position, indicated by a value of 8;
+    if (!getTargetPos(dataField)) return false;
 ```
 To calculate the path from the starting position to the target position
 ```cpp
@@ -188,8 +184,7 @@ Development
 
 Layout:
 
-    .
-    
+    .   
     |-- Input          # Input Files 
     |-- Output         # Output Files   
     |-- PathFinder     # Source Code
