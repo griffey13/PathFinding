@@ -82,7 +82,6 @@ Extend the algorithm to handle multiple units moving simultaneously:
 | ---------------- | ------------------------------------------------------------------------------------ |-----------|
 | Point            | A simple 2-element vector point class used for holding 2D corrdinates of a grid.     | Point.hpp  |
 | AStar            | Contains the actual A* algorithm, used to search the 2D grid and retrieve the optimal trajectory that solves the problem.| AStar.h, AStar.cpp |
-| MAPPGridState    | The state-space representation of a grid comprises of a vector of MAPPGridStates, each such state representing a collection of agents and their current positions on the grid, together with the total cost which took to reach the state, and the _state heuristic -the estimated cost to reach the goal state-_. The cost of moving from one state to the successor (next) state is always 1, since in this representation only one agent can move per state transition. The state heuristic is computed as the sum of all individual heuristics of the agents. | MAPPGridState.hpp, MAPPGridState.cpp |
 
 | Namespace        | Description                                                                          | Location  |
 | ---------------- | ------------------------------------------------------------------------------------ |-----------|
