@@ -14,15 +14,15 @@ Note that this project only provides path-finding algorithms for 2D space.
 
 Setup
 ------------
-To install and compile the program you will need an IDE, such as Visual Studio 2019, and a copy of the source code.
-The code does not use any special libraries, and should be easily compiled.  
+To install and compile the program you will need to use an IDE, such as Visual Studio 2019, and a copy of the source code.
+The code use a third party library to parse JSON files, and should be easily compiled.  
 
 * Download the repository to your local machine
 * Open the Visual Studio Solution **PathFinder.sln**
 * Build the solution via **Build->Build Solution**
 * Run the executable, **PathFinder.exe**
 * A sample input file **take_home_project.json** is provided in the **Input** folder
-* The output generated from the sample input file is provided in the **Output** folder
+* The output generated from the sample input file is provided in the **Output** folder as **take_home_project.txt**
 
 # A* Coding Summary
 - Once a node is chosen, it is guaranteed to be the optimal path from the previous node to the current node since the heuristic is consistent and the best possible _g(h)_ and _f(h)_ is choosen for this node. This current node is then added to the closed set and will be ignored if encountered again as a neighbor of another node during future computations.
@@ -33,13 +33,14 @@ The code does not use any special libraries, and should be easily compiled.
     -  Perform calculations to determine if going from _start_ to _neighbor_ having the current node as its parent node in the path is more optimal than the path that has been calculated so far for _neighbor_. If so, the information for _neighbor_ is updated:
           -  Its new _g(h)_ is easily calculated knowing the definitve g-score of _current_ and _neighbor_ is adjacent to _current_.
           -  Its new _f(h)_ is easily calculated since the h-score is fixed.
-          - The _cameFrom_ list is updated by updating or creating the key `neighbor` with the value `current`. This method to only keep the _parent_ of each node and reconstructing the path backwards is better than keeping all the partial paths: it saves memory, and the reconstruction algorithm is linear, so it is fast and suitable for **Real Time Systems**.
+          - The _cameFrom_ list is updated by updating or creating the key _neighbor_ with the value _current_. This method to only keep the _parent_ of each node and reconstructing the path backwards is better than keeping all the partial paths: it saves memory, and the reconstruction algorithm is linear, so it is fast and suitable for **Real Time Systems**.
 - Iterate on the process until reaching the _Target_ position
 
 Input to the Algorithm
 ------------
 1. **Battlefield Map**
-    -  A binary map of N x N fields, where each field represents a position on the battlefield
+    -  A binary map of N x N fields, where each field represents a position on the battlefield.
+        - **Note:** The current implementation allows for a binary map of N X M fields. 
     -  Each position is either:
           - **Ground Terrain:** Occupiable by a single battle unit.
           - **Elevated Terrain:** Unreachable by battle units.
@@ -68,14 +69,19 @@ You can set the heuristic function to calculate the distance between two points 
 | euclidean | PathFinder::Heuristic::euclidean | Default (shortest possible line between two points) |
 | manhattan | PathFinder::Heuristic::manhattan | Sum of the absolute differences between the coordinates of the points |
 | euclideanNoSQR | PathFinder::Heuristic::euclideanNoSQR | Euclidean heuristic without square root  |
-| dijkstra | PathFinder::Heuristic::dijkstra | Always return 0 |
+| dijkstra | PathFinder::Heuristic::dijkstra | Placeholder for now. Always return 0 |
 
 Output of the Algorithm
 ------------
-* A list of positions for the battle unit to travel from its starting position to the target position.
-* An ASCII representation of the traveled path in the grid from its starting position to the target position.
+
+| Output | Description | Note |
+|-----------|--------------|-------------|
+| File | A list of positions the battle unit traveled from its starting position to the target position | Optional output |
+| File | An ASCII representation of the traveled path in the grid from its starting position to the target position | Optional output |
+| Console Window | Contents of PathOutout.txt and PathVisual.txt pretty printed to the terminal window | Always printed  |
 
 **Note:** The output can also be written to a file for future analysis.
+**Note:** The file names for each output can be provided by the user. 
 
 Constraints of the Algorithm
 ------------
@@ -119,7 +125,7 @@ Extend the algorithm to handle multiple units moving simultaneously:
 
 Libraries
 ------------
-Libraries used in this project.
+This project uses a a third party JSON library which provides an API for manipulating and parsing JSON files.
 
 [nlohmann::json](https://github.com/nlohmann/json)
 
@@ -132,6 +138,26 @@ To instatiate the path-finding algorithm class
 To load a JSON file compatible with [<ins>Risky Tilemap</ins>](https://riskylab.com/tilemap)
 ```cpp
     astar.loadFile('your_JSON_filename_here.json');
+```
+
+An alternative to loading a JSON file to obtain the battlefield grid is to directly specify thye battlergrid yourself as provided below
+```cpp
+    std::vector<int> dataField = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                                   -1, -1, -1,  3,  3, 3, -1, -1, -1, -1, 
+                                   -1, -1, -1,  3, -1, -1, -1, -1, -1, -1, 
+                                   -1, -1, -1,  3, -1, -1, -1, -1, -1, -1, 
+                                   -1, -1, -1,  3, -1, -1, -1, -1, -1, -1, 
+                                   -1, -1,  8,  3,  0, -1, -1, -1, -1, -1, 
+                                   -1, -1, -1,  3, -1, -1, -1, -1, -1, -1, 
+                                   -1, -1, -1,  3, -1, -1, -1, -1, -1, -1, 
+                                   -1, -1, -1,  3,  3,  3,  3,  3,  3, -1, 
+                                   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+    astar.setTileData(dataField, 10, 10);
+    // Find the starting position indicated by a value of 0 inside the grid
+    if (!getStartPos(dataField)) return false;
+
+	// Find the target position, indicated by a value of 8;
+	if (!getTargetPos(dataField)) return false;
 ```
 To calculate the path from the starting position to the target position
 ```cpp
