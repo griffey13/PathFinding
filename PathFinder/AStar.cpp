@@ -276,7 +276,7 @@ namespace PathFinder
 	bool AStar::InsideGrid(const Point& pos) const
 	{
 		return (pos.x >= 0) && (pos.x < m_dimensions.x) &&
-			(pos.y >= 0) && (pos.y < m_dimensions.y);
+		       (pos.y >= 0) && (pos.y < m_dimensions.y);
 	}
 
 	Point AStar::convertTo2D(const int& pos) const
