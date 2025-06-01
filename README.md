@@ -5,6 +5,18 @@ Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Pr
 
 **Note:** This repository aims to solve a take home project assignment for a job interview.
 
+# A* Coding Summary
+--------------------------
+- Once a node is chosen, it is guaranteed to be the optimal path from the previous node to the current node since the heuristic is consistent and the best possible g(h) and f(h) is choosen for this node. This current node is then added to the closed set and will be ignored if encountered again as a neighbor of another node during future computations.
+- Next the algorithm explores the _neighbors_ of the current node. Each current node can have 4 neighbors. For the 4 neighbor nodes we can:
+    -  Ignore it if it is in the closed list
+    -  Ignore it if it is a **Elevated Terrain** which is unreachable by battle units
+    -  Ignore it if it is outside the battlefield grid
+    -  Perform calculations to determine if going from_start_ to _neighbor_ having the current node as its parent node in the path is more optimal than the path that has been calculated so far for _neighbor_. If so, the information for _neighbor_ is updated:
+          -  Its new g(h) is easily calculated knowing the definitve g-score of `current` and `neighbor` is adjacent to `current`.
+          -  Its new f(h) is easily calculated since the h-score is fixed.
+           - The _cameFrom_ list is updated by updating or creating the key `neighbor` with the value `current`. This method to only keep the _parent_ of each node and reconstructing the path backwards is better than keeping all the partial paths: it saves memory, and the reconstruction algorithm is linear, so it is fast and suitable for **Real Time Systems**.
+
 Setup
 ------------
 To install and compile the program you will need an IDE, such as Visual Studio 2019, and a copy of the source code.
