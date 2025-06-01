@@ -15,7 +15,7 @@ Algorithm was written and tested with C++ (C++17) and Microsoft Visual Studio Pr
           -  Its new _g(h)_ is easily calculated knowing the definitve g-score of _current_ and _neighbor_ is adjacent to _current_.
           -  Its new _f(h)_ is easily calculated since the h-score is fixed.
            - The _cameFrom_ list is updated by updating or creating the key `neighbor` with the value `current`. This method to only keep the _parent_ of each node and reconstructing the path backwards is better than keeping all the partial paths: it saves memory, and the reconstruction algorithm is linear, so it is fast and suitable for **Real Time Systems**.
--Iterate on the process until reaching the _Target_ position
+- Iterate on the process until reaching the _Target_ position
 
 Setup
 ------------
