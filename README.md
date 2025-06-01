@@ -125,7 +125,7 @@ Layout:
     .
     
     |-- Input          # Input Files 
-    |-- Output         # Ouput Files   
+    |-- Output         # Output Files   
     |-- PathFinder     # Source Code
       |--Debug
     -- PathFinder.sln  # Visual Studio Solution File    
