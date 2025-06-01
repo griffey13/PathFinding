@@ -100,7 +100,7 @@ namespace PathFinder
 			return false;
 		}
 
-		//Close the file
+		// Close the file
 		file.close();
 
 		// Set the starting position and target position
@@ -258,7 +258,7 @@ namespace PathFinder
 				cout                       << c << ' '; // Space delimited
 				if (bValidFile) outputFile << c << ' '; // Space delimited
 			}
-		    cout                       << '\n';
+		        cout                       << '\n';
 			if (bValidFile) outputFile << '\n';
 		}
 
